@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { SplitScreen } from './SplitScreen';
 import { RegularList } from './RegularList';
 import { people, products } from './localData';
@@ -7,13 +7,18 @@ import { SmallPersonListItem } from './people/SmallPersonListItem';
 import { UserInfo } from './people/UserInfo';
 import { ProductInfo } from './products/ProductInfo';
 import { NumberedList } from './NumberedList';
-import { Modal } from './Modal';
+import { UncontrolledModal } from './UncontrolledModal';
 import { CurrentUserLoader } from './CurrentUserLoader';
 import { UserLoader } from './UserLoader';
 import { ResourceLoader } from './ResourceLoader';
 import { DataSource } from './DataSource';
 import axios from 'axios';
 import { UncontrolledForm } from './UncontrolledForm';
+import { ControlledForm } from './ControlledForm';
+import { ControlledModal } from './ControlledModal';
+import { UncontrolledOnboardingFlow } from './UncontrolledOnboardingFlow';
+import { ControlledOnboardingFlow } from './ControlledOnboardingFlow';
+
 
 const LeftComponent = ({name}) => {
   return <h1 style={{backgroundColor: 'green'}}>{name}</h1>;
@@ -35,68 +40,147 @@ const getLocalStorageData = key => () => {
 const Text = ({ message }) => <h1>{ message }</h1>;
 
 function App() {
+
+  /* 
+   * 1. LAYOUT COMPONENTS 
+   */
+  // return (
+  //   <>
+  //   <SplitScreen leftWeight={1} rightWeight={3}>
+  //     <LeftComponent name="Shawn"/>
+  //     <RightComponent message="Bye bye"/>
+  //   </SplitScreen>
+    
+  //   <UncontrolledModal>
+  //     <ProductInfo product={products[0]} />
+  //   </UncontrolledModal>
+  
+  //   <NumberedList
+  //     items={people}
+  //     resourceName="person"
+  //     itemComponent={SmallPersonListItem} />
+    
+  //   <RegularList
+  //     items={products}
+  //     resourceName="product"
+  //     itemComponent={ProductInfo} />
+  //   </>
+  // );
+
+  /* 
+   * 2. CONTAINER COMPONENTS 
+   */
+  // return (
+  //   <>
+  //   <CurrentUserLoader>
+  //     <UserInfo />
+  //   </CurrentUserLoader>
+
+  //   <UserLoader userId="345">
+  //     <UserInfo />
+  //   </UserLoader>
+
+  //   <ResourceLoader
+  //     resourceUrl="/users/123"
+  //     resourceName="user">
+  //       <UserInfo />
+  //   </ResourceLoader>
+    
+  //   <ResourceLoader
+  //     resourceUrl="/products/1234"
+  //     resourceName="product">
+  //       <ProductInfo />
+  //   </ResourceLoader> 
+
+  //   <DataSource getDataFunc={async () => {
+  //       const response = await axios.get('/users/123');
+  //       return response.data;
+  //     }} resourceName="user">
+  //     <UserInfo />
+  //   </DataSource>
+
+  //   <DataSource 
+  //     getDataFunc={getServerData('/users/456')}
+  //     resourceName="user">
+  //     <UserInfo />
+  //   </DataSource>
+
+  //   <DataSource
+  //     getDataFunc={getLocalStorageData("message")} resourceName="message">
+  //       <Text />
+  //   </DataSource>
+  //   </>
+  // );
+
+
+  /* 
+   * 3. CONTROLLED AND UNCONTROLLED COMPONENTS 
+   */
+  //const [shouldShowModal, setShouldShowModal] = useState(false);
+  
+  const Step1 = ({ goToNext }) => (
+    <>
+    <h1>Step 1</h1>
+    <button onClick={() => goToNext({name: 'John Doe'})}>Next</button>
+    </>
+  );
+
+  const Step2 = ({ goToNext }) => (
+    <>
+    <h1>Step 2</h1>
+    <button onClick={() => goToNext({age: 50})}>Next</button>
+    </>
+  );
+  
+  const Step3 = ({ goToNext }) => (
+    <>
+    <h1>Step 3</h1>
+    <p>Congratulations! You qualify for our senior discount!</p>
+    <button onClick={() => goToNext({})}>Next</button>
+    </>
+  );  
+
+  const Step4 = ({ goToNext }) => (
+    <>
+    <h1>Step 4</h1>
+    <button onClick={() => goToNext({hairColor: 'Ginger'})}>Next</button>
+    </>
+  );  
+
+  const onNext = stepData => {
+    setOnboardingData({...onboardingData, ...stepData});
+    setCurrentIndex(currentIndex+1);
+  }
+
+  const [onboardingData, setOnboardingData] = useState({});
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   return (
     <>
+    {/* <UncontrolledForm />
+    
+    <ControlledForm /> */}
 
-    {/* 1. LAYOUT COMPONENTS */}
-    {/* <SplitScreen leftWeight={1} rightWeight={3}>
-      <LeftComponent name="Shawn"/>
-      <RightComponent message="Bye bye"/>
-    </SplitScreen>
-    <Modal>
-      <ProductInfo product={products[0]} />
-    </Modal>
-    <NumberedList
-      items={people}
-      resourceName="person"
-      itemComponent={SmallPersonListItem} />
-    <RegularList
-      items={products}
-      resourceName="product"
-      itemComponent={ProductInfo} /> */}
+    {/* <ControlledModal 
+      shouldShow={shouldShowModal}
+      onRequestClose={() => {
+        setShouldShowModal(false);
+      }}>
+        <h1>Hello Modal!</h1>
+      </ControlledModal>
+    <button onClick={() => setShouldShowModal(!shouldShowModal)}>
+      {shouldShowModal?'Hide Modal':'Show Modal'}
+    </button> */}
 
-      {/* 2. CONTAINER COMPONENTS */}
-      {/* <CurrentUserLoader>
-        <UserInfo />
-      </CurrentUserLoader>
-
-      <UserLoader userId="345">
-        <UserInfo />
-      </UserLoader>
-
-      <ResourceLoader
-        resourceUrl="/users/123"
-        resourceName="user">
-          <UserInfo />
-      </ResourceLoader>
-      
-      <ResourceLoader
-        resourceUrl="/products/1234"
-        resourceName="product">
-          <ProductInfo />
-      </ResourceLoader> 
-
-      <DataSource getDataFunc={async () => {
-        const response = await axios.get('/users/123');
-        return response.data;
-      }} resourceName="user">
-        <UserInfo />
-      </DataSource>
-
-      <DataSource 
-        getDataFunc={getServerData('/users/456')}
-        resourceName="user">
-        <UserInfo />
-      </DataSource>
-
-      <DataSource
-        getDataFunc={getLocalStorageData("message")} resourceName="message">
-          <Text />
-      </DataSource> */}
-
-      {/* 3. CONTROLLED AND UNCONTROLLED COMPONENTS */}
-
-      <UncontrolledForm />
+    <ControlledOnboardingFlow 
+      currentIndex={currentIndex}
+      onNext={onNext}
+    >
+      <Step1/>
+      <Step2/>
+      {onboardingData.age >= 62 && <Step3/>}
+      <Step4/>
+    </ControlledOnboardingFlow>
 
     </>
   );
