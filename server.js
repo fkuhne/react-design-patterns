@@ -19,13 +19,13 @@ let users = [{
 	hairColor: 'brown',
 	hobbies: ['swimming', 'bicycling', 'video games'],
 }, {
-	id: '345',
+	id: '234',
 	name: 'Brenda Smith',
 	age: 33,
 	hairColor: 'black',
 	hobbies: ['golf', 'mathematics'],
 }, {
-	id: '456',
+	id: '345',
 	name: 'Jane Garcia',
 	age: 27,
 	hairColor: 'blonde',

@@ -18,7 +18,9 @@ import { ControlledForm } from './ControlledForm';
 import { ControlledModal } from './ControlledModal';
 import { UncontrolledOnboardingFlow } from './UncontrolledOnboardingFlow';
 import { ControlledOnboardingFlow } from './ControlledOnboardingFlow';
-
+import { printProps } from './printProps';
+import { withUser } from './withUser';
+import { UserInfoForm, UserInfoForm2 } from './UserInfoForm';
 
 const LeftComponent = ({name}) => {
   return <h1 style={{backgroundColor: 'green'}}>{name}</h1>;
@@ -116,74 +118,94 @@ function App() {
   /* 
    * 3. CONTROLLED AND UNCONTROLLED COMPONENTS 
    */
-  //const [shouldShowModal, setShouldShowModal] = useState(false);
+  // const [shouldShowModal, setShouldShowModal] = useState(false);
   
-  const Step1 = ({ goToNext }) => (
-    <>
-    <h1>Step 1</h1>
-    <button onClick={() => goToNext({name: 'John Doe'})}>Next</button>
-    </>
-  );
+  // const Step1 = ({ goToNext }) => (
+  //   <>
+  //   <h1>Step 1</h1>
+  //   <button onClick={() => goToNext({name: 'John Doe'})}>Next</button>
+  //   </>
+  // );
 
-  const Step2 = ({ goToNext }) => (
-    <>
-    <h1>Step 2</h1>
-    <button onClick={() => goToNext({age: 50})}>Next</button>
-    </>
-  );
+  // const Step2 = ({ goToNext }) => (
+  //   <>
+  //   <h1>Step 2</h1>
+  //   <button onClick={() => goToNext({age: 50})}>Next</button>
+  //   </>
+  // );
   
-  const Step3 = ({ goToNext }) => (
-    <>
-    <h1>Step 3</h1>
-    <p>Congratulations! You qualify for our senior discount!</p>
-    <button onClick={() => goToNext({})}>Next</button>
-    </>
-  );  
+  // const Step3 = ({ goToNext }) => (
+  //   <>
+  //   <h1>Step 3</h1>
+  //   <p>Congratulations! You qualify for our senior discount!</p>
+  //   <button onClick={() => goToNext({})}>Next</button>
+  //   </>
+  // );  
 
-  const Step4 = ({ goToNext }) => (
-    <>
-    <h1>Step 4</h1>
-    <button onClick={() => goToNext({hairColor: 'Ginger'})}>Next</button>
-    </>
-  );  
+  // const Step4 = ({ goToNext }) => (
+  //   <>
+  //   <h1>Step 4</h1>
+  //   <button onClick={() => goToNext({hairColor: 'Ginger'})}>Next</button>
+  //   </>
+  // );  
 
-  const onNext = stepData => {
-    setOnboardingData({...onboardingData, ...stepData});
-    setCurrentIndex(currentIndex+1);
-  }
+  // const onNext = stepData => {
+  //   setOnboardingData({...onboardingData, ...stepData});
+  //   setCurrentIndex(currentIndex+1);
+  // }
 
-  const [onboardingData, setOnboardingData] = useState({});
-  const [currentIndex, setCurrentIndex] = useState(0);
+  // const [onboardingData, setOnboardingData] = useState({});
+  // const [currentIndex, setCurrentIndex] = useState(0);
+
+  // return (
+  //   <>
+  //   <UncontrolledForm />
+    
+  //   <ControlledForm />
+
+  //   <ControlledModal 
+  //     shouldShow={shouldShowModal}
+  //     onRequestClose={() => {
+  //       setShouldShowModal(false);
+  //     }}>
+  //     <h1>Hello Modal!</h1>
+  //   </ControlledModal>
+    
+  //   <button onClick={() => setShouldShowModal(!shouldShowModal)}>
+  //     {shouldShowModal?'Hide Modal':'Show Modal'}
+  //   </button>
+
+  //   <ControlledOnboardingFlow 
+  //     currentIndex={currentIndex}
+  //     onNext={onNext}
+  //   >
+  //     <Step1/>
+  //     <Step2/>
+  //     {onboardingData.age >= 62 && <Step3/>}
+  //     <Step4/>
+  //   </ControlledOnboardingFlow>
+
+  //   </>
+  // );
+
+  /*
+   * 4. HIGHER-ORDER COMPONENTS (HOCs)
+   * (components that returns another components (and not a JS code)
+   * )
+   */
+
+  const UserInfoWrapped = printProps(UserInfo);
+
+  const UserInfoWithLoader = withUser(UserInfo, '234');
 
   return (
-    <>
-    {/* <UncontrolledForm />
-    
-    <ControlledForm /> */}
+    //<UserInfoWrapped a={1} b="Hello" c={{name: "Shawn"}}/>
 
-    {/* <ControlledModal 
-      shouldShow={shouldShowModal}
-      onRequestClose={() => {
-        setShouldShowModal(false);
-      }}>
-        <h1>Hello Modal!</h1>
-      </ControlledModal>
-    <button onClick={() => setShouldShowModal(!shouldShowModal)}>
-      {shouldShowModal?'Hide Modal':'Show Modal'}
-    </button> */}
+    // <UserInfoWithLoader />
 
-    <ControlledOnboardingFlow 
-      currentIndex={currentIndex}
-      onNext={onNext}
-    >
-      <Step1/>
-      <Step2/>
-      {onboardingData.age >= 62 && <Step3/>}
-      <Step4/>
-    </ControlledOnboardingFlow>
-
-    </>
+    <UserInfoForm2 />
   );
+
 }
 
 
