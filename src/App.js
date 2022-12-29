@@ -22,6 +22,8 @@ import { printProps } from './printProps';
 import { withUser } from './withUser';
 import { UserInfoForm, UserInfoForm2 } from './UserInfoForm';
 import { useCurrentUser } from './useCurrentUser';
+import { RecursiveComponent } from './RecursiveComponent';
+import { BigSuccessButton, DangerButton } from './partiallyApply';
 
 const LeftComponent = ({name}) => {
   return <h1 style={{backgroundColor: 'green'}}>{name}</h1>;
@@ -211,24 +213,61 @@ function App() {
    * 5. CUSTOM HOOKS
    */
 
+  // return (
+
+  //   <>
+  //   <UserInfoWithCustomHook />
+
+  //   <UseUserCustomHook userId="123" />
+  //   <UseUserCustomHook userId="234" />
+  //   <UseUserCustomHook userId="345" />
+
+  //   <UserInfoWithUseResource userId="234" />
+  //   <ProductInfoWithUseResource productId="2345" />
+
+  //   <UserInfoWithDataSource userId="234" />
+  //   </>
+  // );
+
+
+  /*
+   * 6. FUNCTIONAL PROGRAMMING
+   *  FP is a method of organizing code in a way that:
+   *  1. Minimizes mutation and state change
+   *  2. Keeps functions independent of external data
+   *  3. Treats functions as first-class citizens
+   */
+  const nestedObject = {
+    a: 1,
+    b: {
+      b1: 4,
+      b2: {
+        b23: 'Hello',
+      },
+      b3: {
+        b31: {
+          message: 'Hi',
+        },
+        b32: {
+          message: 'Hi',
+        }
+      }
+    },
+    c: {
+      c1: 2,
+      c2: 3,
+    }
+  }
+
   return (
-
     <>
-    {/* <UserInfoWithCustomHook />
 
-    <UseUserCustomHook userId="123" />
-    <UseUserCustomHook userId="234" />
-    <UseUserCustomHook userId="345" /> */}
+    {/* <RecursiveComponent data={nestedObject} /> */}
 
-    {/* <UserInfoWithUseResource userId="234" />
-    <ProductInfoWithUseResource productId="2345" /> */}
-
-    <UserInfoWithDataSource userId="234" />
+    <DangerButton text='FCK!'/>
+    <BigSuccessButton text='YAY :)'/>
     </>
   );
-
 }
-
-
 
 export default App;
