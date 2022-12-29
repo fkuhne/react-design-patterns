@@ -4,8 +4,8 @@ import { SplitScreen } from './SplitScreen';
 import { RegularList } from './RegularList';
 import { people, products } from './localData';
 import { SmallPersonListItem } from './people/SmallPersonListItem';
-import { UserInfo } from './people/UserInfo';
-import { ProductInfo } from './products/ProductInfo';
+import { UserInfo, UserInfoWithCustomHook, UserInfoWithDataSource, UserInfoWithUseResource, UseUserCustomHook } from './people/UserInfo';
+import { ProductInfo, ProductInfoWithUseResource } from './products/ProductInfo';
 import { NumberedList } from './NumberedList';
 import { UncontrolledModal } from './UncontrolledModal';
 import { CurrentUserLoader } from './CurrentUserLoader';
@@ -21,6 +21,7 @@ import { ControlledOnboardingFlow } from './ControlledOnboardingFlow';
 import { printProps } from './printProps';
 import { withUser } from './withUser';
 import { UserInfoForm, UserInfoForm2 } from './UserInfoForm';
+import { useCurrentUser } from './useCurrentUser';
 
 const LeftComponent = ({name}) => {
   return <h1 style={{backgroundColor: 'green'}}>{name}</h1>;
@@ -194,16 +195,36 @@ function App() {
    * )
    */
 
-  const UserInfoWrapped = printProps(UserInfo);
+  // const UserInfoWrapped = printProps(UserInfo);
 
-  const UserInfoWithLoader = withUser(UserInfo, '234');
+  // const UserInfoWithLoader = withUser(UserInfo, '234');
 
-  return (
+  // return (
     //<UserInfoWrapped a={1} b="Hello" c={{name: "Shawn"}}/>
 
     // <UserInfoWithLoader />
 
-    <UserInfoForm2 />
+    // <UserInfoForm2 />
+  // );
+
+  /*
+   * 5. CUSTOM HOOKS
+   */
+
+  return (
+
+    <>
+    {/* <UserInfoWithCustomHook />
+
+    <UseUserCustomHook userId="123" />
+    <UseUserCustomHook userId="234" />
+    <UseUserCustomHook userId="345" /> */}
+
+    {/* <UserInfoWithUseResource userId="234" />
+    <ProductInfoWithUseResource productId="2345" /> */}
+
+    <UserInfoWithDataSource userId="234" />
+    </>
   );
 
 }

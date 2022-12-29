@@ -85,6 +85,6 @@ app.get('/products', (req, res) => {
 	res.json(products);
 });
 
-app.listen(8000, () => {
-	console.log('Server is listening on port 8000');
+app.listen(8001, () => {
+	console.log('Server is listening on port 8001');
 });
